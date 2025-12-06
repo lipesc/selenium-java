@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import com.lipesc.pages.GoogleSearchPage;
+import com.lipesc.utils.DriverManagerSelenium;
 
 
 public class App 
@@ -14,7 +15,7 @@ public class App
     {
         
         
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = DriverManagerSelenium.getDriver();
         try {
             GoogleSearchPage searchPage = new GoogleSearchPage(driver);
             searchPage.openGoogle();
@@ -26,7 +27,7 @@ public class App
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            driver.quit();
+            DriverManagerSelenium.closerDriver();
         }
     }
 }

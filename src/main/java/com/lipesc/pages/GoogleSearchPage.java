@@ -16,23 +16,23 @@ public class GoogleSearchPage {
 
     public GoogleSearchPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(12));
 
     }
 
     public void openGoogle() {
-    driver.get("https://google.com.br");        
+    driver.get("https://duckduckgo.com");        
     }
 
     public void search(String query) {
         System.out.println("buscando > " + query);
-        WebElement search = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("q")));
+        WebElement search = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("searchbox_input")));
         search.clear();
         search.sendKeys(query);
         search.submit();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
 
@@ -40,13 +40,13 @@ public class GoogleSearchPage {
     }
 
     public List<String> getResultTitles() {
-        List<WebElement> results = driver.findElements(By.cssSelector("div.g"));
+        List<WebElement> results = driver.findElements(By.id("article"));
         System.out.printf("titulos encontrados > &s \n", results.size());
 
         List<String> titles = new ArrayList<>();
         for (int i = 0; i < Math.min(5, results.size()); i++) {
             try {
-                String title = results.get(i).findElement(By.cssSelector("h3")).getText();
+                String title = results.get(i).findElement(By.cssSelector("h1 a")).getText();
                 titles.add(title);
             } catch (Exception e) {
                 // TODO: handle exception
