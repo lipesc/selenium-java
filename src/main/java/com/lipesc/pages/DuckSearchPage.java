@@ -10,11 +10,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class GoogleSearchPage {
+public class DuckSearchPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    public GoogleSearchPage(WebDriver driver) {
+    public DuckSearchPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(12));
 
@@ -26,7 +26,7 @@ public class GoogleSearchPage {
 
     public void search(String query) {
         System.out.println("buscando > " + query);
-        WebElement search = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("searchbox_input")));
+        WebElement search = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("q")));
         search.clear();
         search.sendKeys(query);
         search.submit();
@@ -40,16 +40,16 @@ public class GoogleSearchPage {
     }
 
     public List<String> getResultTitles() {
-        List<WebElement> results = driver.findElements(By.id("article"));
-        System.out.printf("titulos encontrados > &s \n", results.size());
+        List<WebElement> results = driver.findElements(By.cssSelector("article"));
+        // System.out.printf("titulos encontrados > &d \n", results.size());
 
         List<String> titles = new ArrayList<>();
         for (int i = 0; i < Math.min(5, results.size()); i++) {
             try {
-                String title = results.get(i).findElement(By.cssSelector("h1 a")).getText();
+                String title = results.get(i).findElement(By.cssSelector("h2 a")).getText();
                 titles.add(title);
             } catch (Exception e) {
-                // TODO: handle exception
+            e.printStackTrace();
             }
         }
         return titles;
@@ -58,7 +58,7 @@ public class GoogleSearchPage {
     public void displayResults(List<String> results) {
         int count = 1;
         for (String result : results) {
-            System.out.printf("%d -- %s", count, result);
+            System.out.printf("%d -- %s\n", count, result);
             count++;
         }
     }

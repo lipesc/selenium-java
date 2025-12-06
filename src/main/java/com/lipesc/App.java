@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import com.lipesc.pages.GoogleSearchPage;
+import com.lipesc.pages.DuckSearchPage;
 import com.lipesc.utils.DriverManagerSelenium;
 
 
@@ -17,9 +17,9 @@ public class App
         
         WebDriver driver = DriverManagerSelenium.getDriver();
         try {
-            GoogleSearchPage searchPage = new GoogleSearchPage(driver);
+            DuckSearchPage searchPage = new DuckSearchPage(driver);
             searchPage.openGoogle();
-            searchPage.search("Selenium Java");
+            searchPage.search("Selenium Search pages with Java");
             
             var titles = searchPage.getResultTitles();
             searchPage.displayResults(titles);
