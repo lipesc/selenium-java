@@ -1,7 +1,11 @@
 package com.lipesc;
 
+import java.sql.DriverManager;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import com.lipesc.pages.GoogleSearchPage;
 
 
 public class App 
@@ -9,15 +13,15 @@ public class App
     public static void main( String[] args )
     {
         
-        WebDriver driver = new ChromeDriver();
         
+        WebDriver driver = new ChromeDriver();
         try {
-           
-            driver.get("https://www.github.com/lipesc");
+            GoogleSearchPage searchPage = new GoogleSearchPage(driver);
+            searchPage.openGoogle();
+            searchPage.search("Selenium Java");
             
-            System.out.println("teste de titulo > " + driver.getTitle());
-            
-            Thread.sleep(1000);
+            var titles = searchPage.getResultTitles();
+            searchPage.displayResults(titles);
             
         } catch (Exception e) {
             e.printStackTrace();
